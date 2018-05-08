@@ -1,0 +1,13 @@
+{
+  "name": "Template",
+  "version": "0.0.1",
+  "description": "Template",
+  "main": "app.js",
+  "author": "Esko Takku",
+  "dependencies": {
+    "body-parser": "^1.9.2",
+    "express": "^4.15.4",
+    "request": "^2.81.0",
+    "mariasql": "^0.2.6"
+  }
+}

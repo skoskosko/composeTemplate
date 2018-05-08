@@ -1,0 +1,59 @@
+version: '3'
+
+
+services:
+
+  node_back_general:
+    build:
+      context: ./node/
+      dockerfile: Dockerfile
+      args:
+        - FOLDER=general
+    restart: always
+    volumes:
+      - "./node/general/data:/data"
+    depends_on:
+      - db
+
+  node_back_child1:
+    build:
+      context: ./node/
+      dockerfile: Dockerfile
+      args:
+        - FOLDER=child1
+    restart: always
+    volumes:
+      - "./node/general/data:/data"
+    depends_on:
+      - db
+
+  proxy:
+    build: ./proxy/
+    restart: always
+    ports:
+        - "3000:3000"
+    depends_on:
+      - node_back_general
+      - node_back_child1
+
+  nginx_front:
+    image: nginx:latest
+    restart: always
+    ports:
+       - "80:80"
+       - "443:443"
+    volumes:
+       - './nginx/files:/usr/share/nginx/html'
+       - './nginx/ssl:/etc/ssl/certs'
+       - './nginx/confs:/etc/nginx/conf.d'
+
+  db:
+    image: bitnami/mariadb:latest
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
+      - MARIADB_DATABASE=my_database
+    volumes:
+      - ./mariadb/data:/bitnami

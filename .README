@@ -1,0 +1,27 @@
+# Docker-Compose template for node.js back and nginx front
+Meaby later with I will add some more features.
+
+
+##mariadb
+made with bitnami image with data linked to data folder.
+
+
+##nginx
+files folder has web root. ssl folder has template certs, and confs have configuration that overrides the defaults.
+http://localhost/
+https://localhost/
+
+
+##node
+There is 2 nodejs folders which have their own package.json and app.js file.
+Port on both is 3333 so nginx proxy can listen them.
+
+
+##proxy
+Handles node access in port 3000
+http://localhost:3000/general
+http://localhost:3000/child1
+
+
+##plans
+Later i add some code samples to node, tomcat with jenkins. Meaby some more database connections. Or others stuff I find myself using and want to have template handy.
